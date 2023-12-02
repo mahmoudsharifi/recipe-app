@@ -1,0 +1,12 @@
+# Text backup files
+*.bak
+
+# Database
+*.sqlite3
+
+# Compiled Python files
+*.pyc
+
+# Virtual environment files
+Pipefile
+Pipfile.lock
