@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #recipe-app related apps
     "recipe",
-    "user_authentication",
-
 ]
 
 MIDDLEWARE = [
