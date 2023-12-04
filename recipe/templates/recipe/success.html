@@ -1,0 +1,17 @@
+{% extends 'recipe/layout.html' %}
+
+{% block title %}
+    Success
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="text-light mt-2">Success</h1>
+
+    <div class="login-form m-3 p-3">
+        <p>You have been successfully logged out</p>
+        <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+    </div>
+
+{% endblock %}
+```

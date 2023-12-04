@@ -128,3 +128,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = '/home/hammad/Extras/Paid Assignments/A2_Recipe_App/src/recipe_app/images'
 MEDIA_URL = '/images/'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'

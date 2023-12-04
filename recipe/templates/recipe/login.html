@@ -1,0 +1,22 @@
+{% extends 'recipe/layout.html' %}
+
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    <h1 class="text-light mt-2">Login</h1>
+
+    <div class="login-form m-3 p-3">
+        <form method="post">
+            {% csrf_token %} 
+            {{ form.as_p }}
+            <input class="btn btn-primary" type="submit" value="Login">
+        </form>
+    </div>
+
+{% endblock %}

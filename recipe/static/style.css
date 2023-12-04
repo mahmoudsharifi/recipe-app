@@ -1,4 +1,4 @@
-.card, .recipe-detail {
+.card, .recipe-detail, .login-form {
     background-color: rgb(51, 50, 50);
     color: white;
     border-radius: 10px;
