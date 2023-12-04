@@ -1,0 +1,26 @@
+.card, .recipe-detail {
+    background-color: rgb(51, 50, 50);
+    color: white;
+    border-radius: 10px;
+    padding: 0;
+}
+
+.recipe-detail {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.recipe-detail h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.recipe-detail img {
+    width: 100%;
+    height: auto;
+}
+
+.recipe-detail p {
+    margin-bottom: 10px;
+}

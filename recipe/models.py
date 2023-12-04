@@ -19,14 +19,17 @@ class Recipe(models.Model):
     description = models.TextField()
     time = models.IntegerField()
     cuisine = models.CharField(max_length=255, choices=cuisine_choices)
-    image = models.URLField(default="https://i.imgur.com/removed.png")
-    ingredents = models.ManyToManyField('Ingredient', through='RecipeIngredient')
+    image = models.ImageField(default="removed.png")
+    ingredients = models.ManyToManyField('Ingredient', through='RecipeIngredient')
 
     def isValid(self):
         return self.name != "" and self.description != "" and self.time > 0  and self.cuisine != ""
     
     def __str__(self):
         return f"Recipe: {self.name}"
+    
+    def get_absolute_url(self):
+        return f"/recipe/{self.id}/"
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=255)

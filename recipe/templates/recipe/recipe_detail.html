@@ -1,0 +1,32 @@
+{% extends 'recipe/layout.html' %}
+{% load static %}
+{% load multiply %}
+
+{% block title%} 
+    Detail 
+{% endblock %}
+
+{% block content %}
+
+    <div class="recipe-detail text-light mt-5">
+        <h1 class="text-center">{{ object.name }}</h1>
+        <img src="{{ object.image.url }}" alt="{{ object.title }}" class="border border-warning mb-4">
+        <h3>
+            Description:
+        </h3>
+        <p>{{ object.description }}</p>
+        <br>
+        <h3>
+            Difficulty:
+        </h3>
+        <p>{{ object.time|multiply:object.ingredients.count }}</p>
+        <br>
+        <h3>
+            Ingredients:
+        </h3>
+        {% for recipe_ingredient in object.recipeingredient_set.all %}
+            <p>{{ recipe_ingredient.ingredient.name }}: {{ recipe_ingredient.amount }} {{ recipe_ingredient.ingredient.unit }}</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

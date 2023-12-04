@@ -10,3 +10,9 @@
 # Virtual environment files
 Pipefile
 Pipfile.lock
+
+# Migrations
+**/migrations/*.py
+
+# Uploaded Images Folder
+images/
