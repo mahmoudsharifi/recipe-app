@@ -1,9 +1,12 @@
+import pandas as pd
+
 from django.shortcuts import redirect, render
 from django import views
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm
+from recipe.forms import RecipeSearchForm
 
 from recipe.models import Recipe
 
@@ -15,6 +18,30 @@ class HomeView(LoginRequiredMixin, ListView):
 class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = Recipe
     template_name = "recipe/recipe_detail.html"
+
+class SearchView(LoginRequiredMixin, views.View):
+    model = Recipe
+    template_name = "recipe/search.html"
+
+    def get(self, request):
+        query = request.GET.get("query")
+        form  = RecipeSearchForm()
+        if not query:
+            recipes = Recipe.objects.all()
+        else:
+            recipes = Recipe.objects.filter(name__icontains=query).all()
+
+        df = pd.DataFrame(recipes.values())
+
+
+        if not df.empty:
+            df.columns = df.columns.str.title()
+            df_html = df.to_html(classes="table table-striped table-dark table-hover mt-5", justify="start", index=False, header=True, columns=["Name", "Description", "Cuisine", "Time"])
+            return render(request, "recipe/search.html", {"recipes": df_html, "form": form})
+        else:
+            return render(request, "recipe/search.html", {"form": form, "error_message": "No results found"})
+
+        
 
 class LoginView(views.View):
     def get(self, request):
