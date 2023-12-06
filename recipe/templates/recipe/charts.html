@@ -1,0 +1,19 @@
+{% extends 'recipe/layout.html' %}
+
+{% block title %} Charts {% endblock %}
+
+{% block content %}
+    <h1 class="text-center text-light">Charts</h1>
+        <div class="text-light mt-3 text-center card p-3">
+            <h2>Pie Chart</h2>
+            <img src="data:image/png;base64, {{pie_chart|safe}}">
+        </div>
+        <div class="text-light mt-3 text-center card p-3">
+            <h2>Bar Chart</h2>
+            <img src="data:image/png;base64, {{bar_chart|safe}}">
+        </div>
+        <div class="text-light mt-3 text-center card p-3">
+            <h2>Line Chart</h2>
+            <img src="data:image/png;base64, {{line_chart|safe}}">
+        </div>
+{% endblock %}

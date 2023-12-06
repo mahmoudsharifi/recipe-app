@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from django.shortcuts import redirect, render
 from django import views
@@ -8,7 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm
 from recipe.forms import RecipeSearchForm
 
-from recipe.models import Recipe
+from recipe.models import Recipe, RecipeIngredient
+from recipe.utils import get_chart
 
 # Create your views here.
 class HomeView(LoginRequiredMixin, ListView):
@@ -41,7 +43,46 @@ class SearchView(LoginRequiredMixin, views.View):
         else:
             return render(request, "recipe/search.html", {"form": form, "error_message": "No results found"})
 
+class ChartsView(LoginRequiredMixin, views.View):
+    template_name = "recipe/charts.html"
+
+    def get(self, request):
+        plt.switch_backend('AGG')
+        fig=plt.figure(figsize=(6,3))
+
+        # Create pie chart of the cuisines
+        recipes = Recipe.objects.all()
+        df = pd.DataFrame(recipes.values())
+        df = df["cuisine"].value_counts()
+        plt.pie(df, labels=df.index, autopct='%1.1f%%')
+
+        pie_chart = get_chart()
+        plt.clf()
+
+        # Create a bar chart of the ingredients in all recipes
+        recipes = RecipeIngredient.objects.all().values("ingredient_id")
+        df = pd.DataFrame(recipes.values())
+        df = df["ingredient_id"].value_counts()
+        plt.bar(df.index, df)
+
+        bar_chart = get_chart()
+        plt.clf()
+
+        # Create a line chart of the time it takes to make each recipe
+        recipes = Recipe.objects.all()
+        df = pd.DataFrame(recipes.values())
+        df = df["time"].value_counts().sort_index()
+        plt.plot(df.index, df)
+
+        line_chart = get_chart()
+        plt.clf()
+
+        return render(request, "recipe/charts.html", {
+            "pie_chart": pie_chart,
+            "bar_chart": bar_chart,
+            "line_chart": line_chart
         
+        })
 
 class LoginView(views.View):
     def get(self, request):
