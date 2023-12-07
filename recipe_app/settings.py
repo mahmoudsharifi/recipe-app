@@ -23,11 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%7oj&957_pifuvix_(4%e)pe#__f&$ci_kz&^iujs5o7@$mwi@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    'mahmoudsharifi.pythonanywhere.com',
 ]
 
 
@@ -130,8 +131,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'images'
 MEDIA_URL = '/images/'
 
+STATIC_ROOT = BASE_DIR / 'static'
+STATIC_URL = '/static/'
+
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True

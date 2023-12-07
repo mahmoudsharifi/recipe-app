@@ -17,3 +17,9 @@ Pipfile.lock
 # Uploaded Images Folder
 images/
 Pipfile
+
+# static folder
+static/
+
+# environment file
+.env
