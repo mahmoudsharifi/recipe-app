@@ -11,8 +11,8 @@ A simple recipe app that allows users to create, and view recipes. Users can als
 
 ## Usage
 1. Login using the credentials
-    - Username: `admin`
-    - Password: `admin`
+    - Username: ` mentorCF`
+    - Password: `Ment0r@CareerF0undry`
 
 2. View the recipes created by users
 3. Create a new recipe from the admin panel
