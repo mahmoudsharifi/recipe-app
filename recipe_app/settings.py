@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-%7oj&957_pifuvix_(4%e)pe#__f&$ci_kz&^iujs5o7@$mwi@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -124,8 +127,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = '/home/hammad/Extras/Paid Assignments/A2_Recipe_App/src/recipe_app/images'
+MEDIA_ROOT = BASE_DIR / 'images'
 MEDIA_URL = '/images/'
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
