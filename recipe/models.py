@@ -24,12 +24,22 @@ class Recipe(models.Model):
 
     def isValid(self):
         return self.name != "" and self.description != "" and self.time > 0  and self.cuisine != ""
-    
+
     def __str__(self):
         return f"Recipe: {self.name}"
-    
+
     def get_absolute_url(self):
         return f"/recipe/{self.id}/"
+
+    def calculate_difficulty(self):
+        if self.time < 10 and self.ingredients.count() < 4:
+            return "Easy"
+        elif self.time < 10 and self.ingredients.count() >= 4:
+            return "Medium"
+        elif self.time >= 10 and self.ingredients.count() < 4:
+            return "Intermediate"
+        elif self.time >= 10 and self.ingredients.count() >= 4:
+            return "Hard"
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=255)
@@ -37,7 +47,7 @@ class Ingredient(models.Model):
 
     def isValid(self):
         return self.name != "" and self.unit != ""
-    
+
     def __str__(self):
         return f"Ingredient: {self.name} - Unit: {self.unit}"
 
@@ -48,6 +58,6 @@ class RecipeIngredient(models.Model):
 
     def isValid(self):
         return self.recipe != "" and self.ingredient != "" and self.amount > 0
-    
+
     def __str__(self):
         return f"Recipe: {self.recipe} - Ingredient: {self.ingredient} - Amount: {self.amount}"

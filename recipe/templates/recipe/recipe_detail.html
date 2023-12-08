@@ -2,8 +2,8 @@
 {% load static %}
 {% load multiply %}
 
-{% block title%} 
-    Detail 
+{% block title%}
+    Detail
 {% endblock %}
 
 {% block content %}
@@ -19,7 +19,7 @@
         <h3>
             Difficulty:
         </h3>
-        <p>{{ object.time|multiply:object.ingredients.count }}</p>
+        <p>{{ object.calculate_difficulty }}</p>
         <br>
         <h3>
             Ingredients:

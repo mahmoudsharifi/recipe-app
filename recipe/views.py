@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 from django.shortcuts import redirect, render
 from django import views
+from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -38,8 +39,18 @@ class SearchView(LoginRequiredMixin, views.View):
 
         if not df.empty:
             df.columns = df.columns.str.title()
-            df_html = df.to_html(classes="table table-striped table-dark table-hover mt-5", justify="start", index=False, header=True, columns=["Name", "Description", "Cuisine", "Time"])
-            return render(request, "recipe/search.html", {"recipes": df_html, "form": form})
+            table_html = '<table class="table table-striped table-dark table-hover mt-5">'
+            table_html += '<thead><tr><th>Name</th><th>Description</th><th>Cuisine</th><th>Time</th></tr></thead>'
+            table_html += '<tbody>'
+            for index, row in df.iterrows():
+                table_html += '<tr>'
+                table_html += f'<td><a href="{reverse("recipe_detail", args=[row["Id"]])}" class="link-warning">{row["Name"]}</a></td>'
+                table_html += f'<td>{row["Description"]}</td>'
+                table_html += f'<td>{row["Cuisine"]}</td>'
+                table_html += f'<td>{row["Time"]}</td>'
+                table_html += '</tr>'
+            table_html += '</tbody></table>'
+            return render(request, "recipe/search.html", {"recipes": table_html, "form": form})
         else:
             return render(request, "recipe/search.html", {"form": form, "error_message": "No results found"})
 
@@ -69,9 +80,10 @@ class ChartsView(LoginRequiredMixin, views.View):
         plt.clf()
 
         # Create a line chart of the time it takes to make each recipe
-        recipes = Recipe.objects.all()
-        df = pd.DataFrame(recipes.values())
-        df = df["time"].value_counts().sort_index()
+        # recipes = Recipe.objects.all()
+        # df = pd.DataFrame(recipes.values())
+        # df = df["time"].value_counts().sort_index()
+        df = df.sort_index()
         plt.plot(df.index, df)
 
         line_chart = get_chart()
@@ -81,7 +93,7 @@ class ChartsView(LoginRequiredMixin, views.View):
             "pie_chart": pie_chart,
             "bar_chart": bar_chart,
             "line_chart": line_chart
-        
+
         })
 
 class LoginView(views.View):
@@ -105,7 +117,7 @@ class LoginView(views.View):
         else:
             error = "Invalid username or password"
         return render(request, "recipe/login.html", {"form": form, "error": error})
-    
+
 class LogoutView(views.View):
     def get(self, request):
         logout(request)
