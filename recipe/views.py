@@ -71,9 +71,9 @@ class ChartsView(LoginRequiredMixin, views.View):
         plt.clf()
 
         # Create a bar chart of the ingredients in all recipes
-        recipes = RecipeIngredient.objects.all().values("ingredient_id")
-        df = pd.DataFrame(recipes.values())
-        df = df["ingredient_id"].value_counts()
+        # recipes = RecipeIngredient.objects.all().values("ingredient_id")
+        # df = pd.DataFrame(recipes.values())
+        # df = df["ingredient_id"].value_counts()
         plt.bar(df.index, df)
 
         bar_chart = get_chart()
